@@ -31,15 +31,28 @@ def printBoard(board):
 
 
 #EVERY MOVE IS CHECKED WHETHER IT IS ABLE TO BE PLACED 
-def isValid(board,num):
+def isValid(board,row,col,num):
 
-    empty=True
-    row= True
-    column=True
-    box=True
+    flippedBoard= list(zip(*board))
 
-    if  empty==True and row==True and column==True and box==True:
-         return True  
+    if board[row-1][col-1]!= ".":
+        print("Sorry that isn't a free space")
+        return False
+    
+
+    if num in board[row-1]:
+         print("Sorry that isn't a valid number")
+         return False
+
+    if num in flippedBoard[col-1]:
+         print("Sorry that isn't a valid number")
+         return False
+
+    
+
+
+    return True  
+       
 
 #ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
 def inputNum(board):
@@ -47,33 +60,29 @@ def inputNum(board):
     col= int(input("Please enter which column you want to edit: "))
     num= int(input("Please enter the number you'd like to put on the board: "))
 
-    if isValid(board,num) == True:
+    if isValid(board,row,col,num) == True :
         board[row-1][col-1]= num
+        printBoard(board)
     else:
          inputNum(board)
     
-    
-    return 
+    return board
 
 #FINAL BOARD IS CHECKED TO SEE IF IT IS VALID 
 def isSolved(board):
 
     correct=[1,2,3,4,5,6,7,8,9]
 
-    rows= True
-    cols=True
-    boxes= True
-
     #CHECK IF ROWS ARE VALID
     for row in board:
         if sorted(row)!=correct:
-            rows= False
+            return False
 
     #CHECK IF COLUMNS ARE VALID 
     flippedBoard= list(zip(*board))
     for column in flippedBoard:
         if sorted(column)!=correct:
-                    cols= False
+                    return False
 
     #CHECK IF BOXES ARE VALID
     for box_row in range(0,9,3): #stepping every 3 spaces 
@@ -83,14 +92,9 @@ def isSolved(board):
                  for num2 in range(3):
                       box.append(board[box_row+num1][box_col+num2]) #which row at what position and column at what position 
             if sorted(box)!=correct:
-                 boxes=False
+                 return False
 
-
-
-    if cols==True and rows==True and boxes==True:
-         return True 
-    else:
-         return False
+    return True
 
     
  
@@ -124,3 +128,4 @@ def getBoard():
 
 #print(isSolved(getBoard()))
 printBoard(getBoard())
+inputNum(getBoard())
