@@ -1,7 +1,28 @@
 
 #PRINT BOARD FOR THE USER TO SEE
-def print_board():
-    return
+def printBoard(board):
+    line= "|---------|---------|---------|"
+    section1=""
+    section2=""
+    section3=""
+    i=1
+
+    print(line)
+    for row in board:
+        if i!=3 and i!=6 and i!=9:
+            section1=str(row[0:3])
+            section2=str(row[3:6])
+            section3= str(row[6:])
+            print("|" + section1 + "|" + section2 + "|" + section3 + "|")
+            i+=1
+        else:
+            section1=str(row[0:3])
+            section2=str(row[3:6])
+            section3= str(row[6:])
+            print("|" + section1 + "|" + section2 + "|" + section3 + "|")
+            print(line)
+            i+=1
+        
 
 
 #EVERY MOVE IS CHECKED WHETHER IT IS ABLE TO BE PLACED 
@@ -80,4 +101,5 @@ def getBoard():
     return board 
 
 
-print(isSolved(getBoard()))
+#print(isSolved(getBoard()))
+printBoard(getBoard())
