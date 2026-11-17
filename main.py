@@ -34,20 +34,65 @@ def printBoard(board):
 def isValid(board,row,col,num):
 
     flippedBoard= list(zip(*board))
+    boxRow= 0
+    boxCol= 0
 
+    #CHECK IF SPACE CHOSEN IS AN EMPTY SPACE OR NOT
     if board[row-1][col-1]!= ".":
         print("Sorry that isn't a free space")
         return False
-    
-
+    #CHECK IF INPUTTED NUMBER IS ALREADY IN THE ROW
     if num in board[row-1]:
          print("Sorry that isn't a valid number")
          return False
 
+    #CHECK IF INPUTTED NUMBER IS ALREADY IN THE COLUMN 
     if num in flippedBoard[col-1]:
          print("Sorry that isn't a valid number")
          return False
 
+
+    #CHECK IF THE NUMBER IS ALREADY IN THE BOX 
+    if row<=3 and col<=3:
+        boxRow=0
+        boxCol=0
+         
+    elif row<=3 and col<=6:
+        boxRow=0
+        boxCol=3
+    elif row<=3 and col<=9:
+        boxRow=0
+        boxCol=6
+    elif row<=6 and col<=3:
+        boxRow=3
+        boxCol=0
+    elif row<=6 and col<=6:
+        boxRow=3
+        boxCol=3
+    elif row<=6 and col<=9:
+        boxRow=3
+        boxCol=6
+    elif row<=9 and col<=3:
+        boxRow=6
+        boxCol=0
+    elif row<=9 and col<=6:
+        boxRow=6
+        boxCol=3
+    elif row<=9 and col<=9:
+        boxRow=6
+        boxCol=6
+
+    box=[]
+    for num1 in range(3):
+        for num2 in range(3):
+                box.append(board[boxRow+num1][boxCol+num2]) 
+    print(box)          
+    if num in box:
+        print("Sorry that isn't a valid number")
+        return False
+
+
+    
     
 
 
