@@ -12,7 +12,7 @@ def isValid():
 #FINAL BOARD IS CHECKED TO SEE IF IT IS VALID 
 def isSolved(board):
 
-    correctRow=[1,2,3,4,5,6,7,8,9]
+    correct=[1,2,3,4,5,6,7,8,9]
 
     rows= True
     cols=True
@@ -20,19 +20,33 @@ def isSolved(board):
 
     #CHECK IF ROWS ARE VALID
     for row in board:
-        if sorted(row)!=correctRow:
+        if sorted(row)!=correct:
             rows= False
 
     #CHECK IF COLUMNS ARE VALID 
     flippedBoard= list(zip(*board))
     for column in flippedBoard:
-        if sorted(column)!=correctRow:
+        if sorted(column)!=correct:
                     cols= False
 
-    if cols==True and rows==True:
+    #CHECK IF BOXES ARE VALID
+    for box_row in range(0,9,3): #stepping every 3 spaces 
+         for box_col in range(0,9,3):
+            box=[]
+            for num1 in range(3):
+                 for num2 in range(3):
+                      box.append(board[box_row+num1][box_col+num2]) #which row at what position and column at what position 
+            if sorted(box)!=correct:
+                 boxes=False
+
+
+
+    if cols==True and rows==True and boxes==True:
          return True 
     else:
          return False
+
+    
 
 
 #ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
