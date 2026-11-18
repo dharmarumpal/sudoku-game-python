@@ -1,4 +1,5 @@
 import random 
+import copy 
 
 #PRINT BOARD FOR THE USER TO SEE
 def printBoard(board):
@@ -171,7 +172,29 @@ def generateBoard():
     fillBoard(board)
     return board
 
+def generatePuzzle(board, level):
+    num=0
+    boardCopy= copy.deepcopy(board)
 
+    if level == "e":
+        num = 36//9
+    elif level == "m":
+        num = 45//9
+    elif level == "h":
+        num = 54//9
+
+    for row in boardCopy:
+        for n in random.sample(range(9),num):
+            row[n]=0
+     
+    return boardCopy
+
+board = generateBoard()
+puzzleBoard=(generatePuzzle(board, "m"))
+printBoard(puzzleBoard)
+printBoard(board)
+printBoard(puzzleBoard)
+printBoard(board)
 
 
 
@@ -208,7 +231,7 @@ def main(board):
     else:
          main(board)
 
-board= generateBoard()
-printBoard(board)
-print(isSolved(board))
+#board= generateBoard()
+#printBoard(board)
+#print(isSolved(board))
      
