@@ -33,34 +33,6 @@ def printBoard(board):
 
 
 
-        
-#RETURN BOARD TO BE VALIDATED OR PRINTED 
-def getBoard():
-
-    #board= [[0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0]]
-    
-    board= [[0,2,5,8,4,3,7,9,1],
-            [7,9,1,2,6,5,4,8,3],
-            [4,8,3,9,0,1,6,2,5],
-            [8,1,4,5,9,7,2,3,6],
-            [2,3,6,1,8,4,9,5,7],
-            [9,5,7,3,2,6,8,1,4],
-            [5,6,9,4,3,2,1,7,8],
-            [3,4,2,7,1,8,5,6,9],
-            [1,7,8,6,5,9,3,4,2]]
-
-    
-    return board 
-
-
 
 #EMPTY BOARD TO FILL
 def makeEmptyBoard():
@@ -76,40 +48,6 @@ def makeEmptyBoard():
             [0,0,0,0,0,0,0,0,0]]
     
     return board 
-
-#printBoard(makeEmptyBoard())
-
-#CHECK FOR FREE SPACE
-def checkForFreeSpace(board):
-    for row in range(9):
-        for col in range(9):
-            if board[row][col]==0:
-                return (row,col)
-    return None
-
-print(checkForFreeSpace(getBoard()))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -151,19 +89,35 @@ def isValid(board,row,col,num):
 
 
 
-#ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
-def inputNum(board):
-    row= int(input("Please enter which row you want to edit: "))
-    col= int(input("Please enter which column you want to edit: "))
-    num= int(input("Please enter the number you'd like to put on the board: "))
+#CHECK FOR FREE SPACE
+def checkForFreeSpace(board):
+    for row in range(9):
+        for col in range(9):
+            if board[row][col]==0:
+                return (row,col)
+    return None
 
-    if isValid(board,row,col,num) == True :
-        board[row-1][col-1]= num
+
+
+
+
+#FILL AN EMPTY BOARD RECURSIVELY UNTIL ITS COMPLETE AND COMPLETELY VALID 
+def fillBoard(board):
+    nums=[1,2,3,4,5,6,7,8,9]
+    random.shuffle(nums)
+    free = checkForFreeSpace(board)
+    if free == None:
+        return True 
     else:
-        print("Sorry that isn't a valid move")
-        inputNum(board)
+        row, col = free
+        for num in nums:
+            if isValid(board,row+1,col+1,num):
+                board[row][col]=num
+                if fillBoard(board) == True:
+                    return True
+                board[row][col]=0
     
-    return board
+        return False
 
 
 
@@ -198,7 +152,6 @@ def isSolved(board):
     return True
 
     
- 
 
 
 #CHECK IF BOARD IS COMPLETED
@@ -211,10 +164,30 @@ def checkBoardIsComplete(board):
 
 
 
-     
-#print(isSolved(getBoard()))
-#printBoard(getBoard())
-#inputNum(getBoard())
+
+#GENERATE FULL BOARD
+def generateBoard():
+    board= makeEmptyBoard()
+    fillBoard(board)
+    return board
+
+
+
+
+
+#ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
+def inputNum(board):
+    row= int(input("Please enter which row you want to edit: "))
+    col= int(input("Please enter which column you want to edit: "))
+    num= int(input("Please enter the number you'd like to put on the board: "))
+
+    if isValid(board,row,col,num) == True :
+        board[row-1][col-1]= num
+    else:
+        print("Sorry that isn't a valid move")
+        inputNum(board)
+    
+    return board
 
 
 #MAIN FUNCTION TO RUN ALL LOGIC IN CORRECT ORDER
@@ -235,8 +208,7 @@ def main(board):
     else:
          main(board)
 
-
-#board = getBoard()
-#main(board)
-
+board= generateBoard()
+printBoard(board)
+print(isSolved(board))
      
