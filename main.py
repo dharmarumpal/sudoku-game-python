@@ -170,18 +170,26 @@ def checkBoardIsComplete(board):
 def generateBoard():
     board= makeEmptyBoard()
     fillBoard(board)
-    return board
+    print("----------------------------------------------------------------------")
+    print("---------------------Welcome to my sudoku game!-----------------------")
+    print("----------------------------------------------------------------------")
+    print("------------What difficulty would you like to select today------------")
+    level=input("-------------Really easy, easy, medium, or hard. Please select re/e/m/h: ")
+    puzzleBoard=generatePuzzle(board, level)
+    return puzzleBoard
 
 def generatePuzzle(board, level):
     num=0
     boardCopy= copy.deepcopy(board)
 
-    if level == "e":
-        num = 36//9
+    if level== "re":
+        num= 2
+    elif level == "e":
+        num = 4
     elif level == "m":
-        num = 45//9
+        num = 5
     elif level == "h":
-        num = 54//9
+        num = 6
 
     for row in boardCopy:
         for n in random.sample(range(9),num):
@@ -189,21 +197,19 @@ def generatePuzzle(board, level):
      
     return boardCopy
 
-board = generateBoard()
-puzzleBoard=(generatePuzzle(board, "m"))
-printBoard(puzzleBoard)
-printBoard(board)
-printBoard(puzzleBoard)
-printBoard(board)
-
 
 
 #ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
 def inputNum(board):
-    row= int(input("Please enter which row you want to edit: "))
-    col= int(input("Please enter which column you want to edit: "))
-    num= int(input("Please enter the number you'd like to put on the board: "))
-
+    try:
+        row= int(input("Please enter which row you want to edit: "))
+        col= int(input("Please enter which column you want to edit: "))
+        num= int(input("Please enter the number you'd like to put on the board: "))
+    except ValueError:
+        print("Please only enter a number")
+        inputNum(board)
+        return
+    
     if isValid(board,row,col,num) == True :
         board[row-1][col-1]= num
     else:
@@ -231,7 +237,12 @@ def main(board):
     else:
          main(board)
 
-#board= generateBoard()
+board= generateBoard()
+main(board)
+
+#board = generateBoard()
+#puzzleBoard=(generatePuzzle(board, "m"))
+#printBoard(puzzleBoard)
 #printBoard(board)
-#print(isSolved(board))
-     
+#printBoard(puzzleBoard)
+#printBoard(board)
