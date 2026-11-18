@@ -1,3 +1,4 @@
+import random 
 
 #PRINT BOARD FOR THE USER TO SEE
 def printBoard(board):
@@ -6,10 +7,10 @@ def printBoard(board):
     section1=""
     section2=""
     section3=""
-    rowOfStrings=[]
 
     print(line)
     for row in board:
+        rowOfStrings=[]
         for num in row:
             if num == 0:
                 rowOfStrings.append(".")
@@ -29,8 +30,88 @@ def printBoard(board):
             print("|" + section1 + "|" + section2 + "|" + section3 + "|")
             print(line)
             i+=1
-        rowOfStrings=[]
+
+
+
         
+#RETURN BOARD TO BE VALIDATED OR PRINTED 
+def getBoard():
+
+    #board= [[0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0],
+    #        [0,0,0,0,0,0,0,0,0]]
+    
+    board= [[0,2,5,8,4,3,7,9,1],
+            [7,9,1,2,6,5,4,8,3],
+            [4,8,3,9,0,1,6,2,5],
+            [8,1,4,5,9,7,2,3,6],
+            [2,3,6,1,8,4,9,5,7],
+            [9,5,7,3,2,6,8,1,4],
+            [5,6,9,4,3,2,1,7,8],
+            [3,4,2,7,1,8,5,6,9],
+            [1,7,8,6,5,9,3,4,2]]
+
+    
+    return board 
+
+
+
+#EMPTY BOARD TO FILL
+def makeEmptyBoard():
+
+    board= [[0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]]
+    
+    return board 
+
+#printBoard(makeEmptyBoard())
+
+#CHECK FOR FREE SPACE
+def checkForFreeSpace(board):
+    for row in range(9):
+        for col in range(9):
+            if board[row][col]==0:
+                return (row,col)
+    return None
+
+print(checkForFreeSpace(getBoard()))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #EVERY MOVE IS CHECKED WHETHER IT IS ABLE TO BE PLACED 
@@ -40,19 +121,16 @@ def isValid(board,row,col,num):
 
 
     #CHECK IF SPACE CHOSEN IS AN EMPTY SPACE OR NOT
-    if board[row-1][col-1]!= ".":
-        print("Sorry that isn't a free space")
+    if board[row-1][col-1]!= 0:
         return False
 
     
     #CHECK IF INPUTTED NUMBER IS ALREADY IN THE ROW
     if num in board[row-1]:
-         print("Sorry that isn't a valid number")
          return False
 
     #CHECK IF INPUTTED NUMBER IS ALREADY IN THE COLUMN 
     if num in flippedBoard[col-1]:
-         print("Sorry that isn't a valid number")
          return False
 
 
@@ -65,16 +143,13 @@ def isValid(board,row,col,num):
         for num2 in range(3):
                 box.append(board[boxRow+num1][boxCol+num2])           
     if num in box:
-        print("Sorry that isn't a valid number")
         return False
 
-
-    
-    
-
-
     return True  
-       
+
+
+
+
 
 #ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
 def inputNum(board):
@@ -84,12 +159,15 @@ def inputNum(board):
 
     if isValid(board,row,col,num) == True :
         board[row-1][col-1]= num
-        printBoard(board)
     else:
-        printBoard(board)
+        print("Sorry that isn't a valid move")
         inputNum(board)
     
     return board
+
+
+
+
 
 #FINAL BOARD IS CHECKED TO SEE IF IT IS VALID 
 def isSolved(board):
@@ -122,37 +200,12 @@ def isSolved(board):
     
  
 
-#RETURN BOARD TO BE VALIDATED OR PRINTED 
-def getBoard():
 
-    #board= [[0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0],
-    #        [0,0,0,0,0,0,0,0,0]]
-    
-    board= [[0,0,5,8,4,3,7,9,1],
-            [7,9,1,2,6,5,4,8,3],
-            [4,8,3,9,0,1,6,2,5],
-            [8,1,4,5,9,7,2,3,6],
-            [2,3,6,1,8,4,9,5,7],
-            [9,5,7,3,2,6,8,0,4],
-            [5,0,9,4,3,2,1,7,8],
-            [3,4,2,7,1,8,5,6,9],
-            [1,7,8,6,5,9,0,4,2]]
-
-    
-    return board 
-
-
+#CHECK IF BOARD IS COMPLETED
 def checkBoardIsComplete(board):
     for row in board:
         for n in row:
-            if n== ".":
+            if n== 0:
                 return False
     return True 
 
@@ -164,10 +217,12 @@ def checkBoardIsComplete(board):
 #inputNum(getBoard())
 
 
+#MAIN FUNCTION TO RUN ALL LOGIC IN CORRECT ORDER
 def main(board):
     printBoard(board)
     inputNum(board)
     if checkBoardIsComplete(board)== True:
+        printBoard(board)
         solve= input("Would you like check your finished board? y/n: ")
         if solve=="y":
             if isSolved(board) == True:
@@ -181,7 +236,7 @@ def main(board):
          main(board)
 
 
-board = getBoard()
-main(board)
+#board = getBoard()
+#main(board)
 
      
