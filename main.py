@@ -60,8 +60,7 @@ def isValid(board,row,col,num):
     box=[]
     for num1 in range(3):
         for num2 in range(3):
-                box.append(board[boxRow+num1][boxCol+num2]) 
-    print(box)          
+                box.append(board[boxRow+num1][boxCol+num2])           
     if num in box:
         print("Sorry that isn't a valid number")
         return False
@@ -84,7 +83,8 @@ def inputNum(board):
         board[row-1][col-1]= num
         printBoard(board)
     else:
-         inputNum(board)
+        printBoard(board)
+        inputNum(board)
     
     return board
 
@@ -146,6 +146,39 @@ def getBoard():
     return board 
 
 
+def checkBoardIsComplete(board):
+    for row in board:
+        for n in row:
+            if n== ".":
+                return False
+    return True 
+
+
+
+     
 #print(isSolved(getBoard()))
-printBoard(getBoard())
-inputNum(getBoard())
+#printBoard(getBoard())
+#inputNum(getBoard())
+
+
+def main(board):
+    printBoard(board)
+    inputNum(board)
+    if checkBoardIsComplete(board)== True:
+        solve= input("Would you like check your finished board? y/n: ")
+        if solve=="y":
+            if isSolved(board) == True:
+                print("Board checked")
+                print("Well done you successfully completed the board!")
+            else:
+                 print("Oh no, looks like something went wrong. Better luck next time!")
+        else:
+            print("Ok, you can check yourself :)")
+    else:
+         main(board)
+
+
+board = getBoard()
+main(board)
+
+     
