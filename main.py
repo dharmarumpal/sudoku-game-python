@@ -173,8 +173,12 @@ def generateBoard():
     print("----------------------------------------------------------------------")
     print("---------------------Welcome to my sudoku game!-----------------------")
     print("----------------------------------------------------------------------")
+    print("--If you would like to exit the game at any point, please enter 0000--")
+    print("---This will immediately exit the game and not resume your progress---")
+    print("----------------------------------------------------------------------")
     print("------------What difficulty would you like to select today------------")
-    level=input("-------------Really easy, easy, medium, or hard. Please select re/e/m/h: ")
+    print("----------------------------------------------------------------------")
+    level=input("-----------Really easy, easy, medium, or hard. Please select re/e/m/h: ")
     puzzleBoard=generatePuzzle(board, level)
     return puzzleBoard
 
@@ -198,23 +202,43 @@ def generatePuzzle(board, level):
     return boardCopy
 
 
-
+ 
 #ALLOWS USER TO ENTER A NUMBER WHERE THEY WANT 
 def inputNum(board):
+    
     try:
         row= int(input("Please enter which row you want to edit: "))
+        if row==0000:
+            print("Looks like you're giving up :(")
+            print("Hope you enjoyed and thanks for playing!")
+            exit()
         col= int(input("Please enter which column you want to edit: "))
+        if col==0000:
+            print("Looks like you're giving up :(")
+            print("Hope you enjoyed and thanks for playing!")
+            exit()
         num= int(input("Please enter the number you'd like to put on the board: "))
+        if num==0000:
+            print("Looks like you're giving up :(")
+            print("Hope you enjoyed and thanks for playing!")
+            exit()
+
+        else:
+            if isValid(board,row,col,num) == True :
+                board[row-1][col-1]= num
+            else:
+                print("Sorry that isn't a valid move")
+                inputNum(board)
+
     except ValueError:
         print("Please only enter a number")
         inputNum(board)
-        return
-    
-    if isValid(board,row,col,num) == True :
-        board[row-1][col-1]= num
-    else:
-        print("Sorry that isn't a valid move")
+    except IndexError:
+        print("Please only enter a number between 1-9")
         inputNum(board)
+        return
+
+
     
     return board
 
