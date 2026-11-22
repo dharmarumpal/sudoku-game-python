@@ -4,7 +4,7 @@ import copy
 #PRINT BOARD FOR THE USER TO SEE
 def printBoard(board):
     line= "|-----|-----|-----|"
-    i=1
+    i=1 #count what row the for loop is on
     section1=""
     section2=""
     section3=""
@@ -35,7 +35,7 @@ def printBoard(board):
 
 
 
-#EMPTY BOARD TO FILL
+#EMPTY BOARD TO FILL: used by fillBoard function 
 def makeEmptyBoard():
 
     board= [[0,0,0,0,0,0,0,0,0],
@@ -90,7 +90,7 @@ def isValid(board,row,col,num):
 
 
 
-#CHECK FOR FREE SPACE
+#CHECK FOR FREE SPACE: used by fillBoard function 
 def checkForFreeSpace(board):
     for row in range(9):
         for col in range(9):
@@ -182,6 +182,8 @@ def generateBoard():
     puzzleBoard=generatePuzzle(board, level)
     return puzzleBoard
 
+
+#GENERATE PUZZLE USING A FULL BOARD, AND TAKING AWAY DIFFERENT AMOUNT OF SPACES DEPENDING ON LEVEL SELECTED 
 def generatePuzzle(board, level):
     num=0
     boardCopy= copy.deepcopy(board)
@@ -263,10 +265,3 @@ def main(board):
 
 board= generateBoard()
 main(board)
-
-#board = generateBoard()
-#puzzleBoard=(generatePuzzle(board, "m"))
-#printBoard(puzzleBoard)
-#printBoard(board)
-#printBoard(puzzleBoard)
-#printBoard(board)
