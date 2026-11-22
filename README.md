@@ -3,6 +3,7 @@
 Welcome to my sudoku game! The instructions are very simple and I hope you enjoy!
 
 Over view of what the program does:
+
 The program builds and creates a sudoku puzzle from scratch, based on a level of difficulty selected by the user. The program then takes the input from the user of which space on the board they'd like to change (depending on the row and column of the space), and what number they'd like to add. The program then checks if the input if valid based on the row, column, and box of which the number wants to be added to. If valid, it adds it to the board, outputs the new board and let the user enter a new number. If the user completes the board, the program then recognises this, and asks if the user wants to check if it's correct. If they do, the program runs a check on the final board, and outputs if it is correct or not. And if they user doesn't want to check it, they can choose to check it themselves. 
 
 Instructions:
