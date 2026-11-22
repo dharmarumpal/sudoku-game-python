@@ -11,6 +11,7 @@ Instructions:
 - Then enter which number you want to put on the board
 
 If you want to exit the game at any point, you can input 0000 and it will exit the game. The progress will not be saved.
+
 If you complete the board you can check it's correct with my checker, or you can check yourself!
 
 Enjoy!
